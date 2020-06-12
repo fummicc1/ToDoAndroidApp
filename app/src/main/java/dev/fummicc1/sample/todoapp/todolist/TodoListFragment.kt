@@ -6,23 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.fummicc1.sample.todoapp.R
 import dev.fummicc1.sample.todoapp.model.Todo
-import dev.fummicc1.sample.todoapp.repository.TodoRepository
-import kotlinx.android.synthetic.main.todo_list_fragment.*
 
 class TodoListFragment : Fragment() {
-
-    companion object {
-        fun newInstance() =
-            TodoListFragment()
-    }
-
     private val viewModel: TodoListViewModel by activityViewModels()
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: TodoListAdapter
+    private lateinit var viewManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,14 +27,23 @@ class TodoListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val layoutManager = LinearLayoutManager(context)
-        viewModel.getTodos().observe(viewLifecycleOwner, TodoListObserver())
+        viewManager = LinearLayoutManager(context)
+        viewAdapter = TodoListAdapter(mutableListOf())
+        activity?.findViewById<RecyclerView>(R.id.recyclerView)?.apply {
+            setHasFixedSize(true)
+            adapter = viewAdapter
+            layoutManager = viewManager
+        }?.let {
+            recyclerView = it
+        }
+        viewModel.getTodos().observe(viewLifecycleOwner, Observer { viewAdapter })
     }
 
-    class TodoListObserver: Observer<List<Todo>> {
-        override fun onChanged(t: List<Todo>?) {
-            print(t)
+    class Observer(private val adapter: TodoListAdapter): androidx.lifecycle.Observer<MutableList<Todo>> {
+        override fun onChanged(t: MutableList<Todo>?) {
+            t?.let {
+                adapter.update(it)
+            }
         }
     }
-
 }

@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import dev.fummicc1.sample.todoapp.R
@@ -30,6 +31,7 @@ class TodoListItemView : LinearLayout {
     }
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
+        LayoutInflater.from(context).inflate(R.id.sample_todo_list_item_view_container, this, true)
     }
 
 }

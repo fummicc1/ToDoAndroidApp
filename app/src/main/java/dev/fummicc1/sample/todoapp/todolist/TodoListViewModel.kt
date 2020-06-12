@@ -7,12 +7,12 @@ import dev.fummicc1.sample.todoapp.model.Todo
 import dev.fummicc1.sample.todoapp.repository.TodoRepository
 
 class TodoListViewModel() : ViewModel() {
-    private var todos = MutableLiveData<List<Todo>>()
+    private var todos = MutableLiveData<MutableList<Todo>>()
     private val repository = TodoRepository
 
-    fun getTodos(): LiveData<List<Todo>> {
+    fun getTodos(): MutableLiveData<MutableList<Todo>> {
         val todos = repository.mock()
-        this.todos.value = todos
-        return  this.todos
+        this.todos.value?.addAll(todos)
+        return this.todos
     }
 }
