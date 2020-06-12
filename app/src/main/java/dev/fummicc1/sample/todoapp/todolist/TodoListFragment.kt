@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.fummicc1.sample.todoapp.R
+import dev.fummicc1.sample.todoapp.model.Todo
+import dev.fummicc1.sample.todoapp.repository.TodoRepository
 import kotlinx.android.synthetic.main.todo_list_fragment.*
 
 class TodoListFragment : Fragment() {
@@ -32,9 +34,13 @@ class TodoListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val layoutManager = LinearLayoutManager(context)
-        viewModel.getTodos().observe(viewLifecycleOwner, Observer {
+        viewModel.getTodos().observe(viewLifecycleOwner, TodoListObserver())
+    }
 
-        })
+    class TodoListObserver: Observer<List<Todo>> {
+        override fun onChanged(t: List<Todo>?) {
+            print(t)
+        }
     }
 
 }

@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import dev.fummicc1.sample.todoapp.model.Todo
 import dev.fummicc1.sample.todoapp.repository.TodoRepository
 
-class TodoListViewModel(private val repository: TodoRepository) : ViewModel() {
+class TodoListViewModel() : ViewModel() {
     private var todos = MutableLiveData<List<Todo>>()
+    private val repository = TodoRepository
 
     fun getTodos(): LiveData<List<Todo>> {
         val todos = repository.mock()
