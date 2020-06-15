@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.fummicc1.sample.todoapp.R
 import dev.fummicc1.sample.todoapp.model.Todo
 
-class TodoListAdapter(private var todos: MutableList<Todo>): RecyclerView.Adapter<TodoListViewHolder>() {
+class TodoListAdapter(private var todos: List<Todo>): RecyclerView.Adapter<TodoListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoListViewHolder {
         val inflate = (parent.context as Activity).layoutInflater
-        val view = inflate.inflate(R.layout.sample_todo_list_item_view, parent, true)
+        val view = inflate.inflate(R.layout.sample_todo_list_item_view, parent, false)
         val viewHolder = TodoListViewHolder(view)
         return viewHolder
     }
@@ -22,7 +22,7 @@ class TodoListAdapter(private var todos: MutableList<Todo>): RecyclerView.Adapte
         holder.bind(todos[position])
     }
 
-    fun update(todos: MutableList<Todo>) {
+    fun update(todos: List<Todo>) {
         this.todos = todos
         notifyDataSetChanged()
     }

@@ -8,8 +8,5 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val fragment = TodoListFragment()
-        supportFragmentManager.beginTransaction().add(R.id.todo_list_fragment_container, fragment).commit()
     }
 }

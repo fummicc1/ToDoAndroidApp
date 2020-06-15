@@ -1,5 +1,6 @@
 package dev.fummicc1.sample.todoapp.todolist
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -10,7 +11,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import dev.fummicc1.sample.todoapp.R
+import dev.fummicc1.sample.todoapp.R.id.sample_todo_list_item_view_container
 
 class TodoListItemView : LinearLayout {
 
@@ -30,8 +31,10 @@ class TodoListItemView : LinearLayout {
         init(attrs, defStyle)
     }
 
+
+    @SuppressLint("ResourceType")
     private fun init(attrs: AttributeSet?, defStyle: Int) {
-        LayoutInflater.from(context).inflate(R.id.sample_todo_list_item_view_container, this, true)
+        LayoutInflater.from(context).inflate(sample_todo_list_item_view_container, this, true)
     }
 
 }

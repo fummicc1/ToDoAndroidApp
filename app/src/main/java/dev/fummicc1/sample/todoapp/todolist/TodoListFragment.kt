@@ -22,28 +22,18 @@ class TodoListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.todo_list_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+        val view = inflater.inflate(R.layout.todo_list_fragment, container, false)
         viewManager = LinearLayoutManager(context)
-        viewAdapter = TodoListAdapter(mutableListOf())
-        activity?.findViewById<RecyclerView>(R.id.recyclerView)?.apply {
-            setHasFixedSize(true)
+        viewAdapter = TodoListAdapter(listOf())
+        view.findViewById<RecyclerView>(R.id.recyclerView)?.apply {
             adapter = viewAdapter
             layoutManager = viewManager
         }?.let {
             recyclerView = it
         }
-        viewModel.getTodos().observe(viewLifecycleOwner, Observer { viewAdapter })
-    }
-
-    class Observer(private val adapter: TodoListAdapter): androidx.lifecycle.Observer<MutableList<Todo>> {
-        override fun onChanged(t: MutableList<Todo>?) {
-            t?.let {
-                adapter.update(it)
-            }
-        }
+        viewModel.getTodos().observe(viewLifecycleOwner, Observer {
+            this.viewAdapter.update(it)
+        })
+        return view
     }
 }
